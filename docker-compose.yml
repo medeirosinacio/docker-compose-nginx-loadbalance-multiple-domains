@@ -2,27 +2,40 @@ version: "3.7"
 
 services:
 
-  webserver:
+  proxy:
     image: nginx:alpine
-    depends_on:
-      - php-fpm
-    container_name: webserver
-    working_dir: /var/www/html
+    container_name: proxy
     volumes:
-      - ../:/var/www/html/
-      - ./nginx/nginx.conf:/etc/nginx/conf.d/zzz99-overrides.conf
-      - ./ssl/:/etc/ssl
+      - ./nginx.conf/nginx.proxy.conf:/etc/nginx/conf.d/z-overrides.conf
     ports:
       - 80:80
-      - 443:443
 
-  php-fpm:
-    image: devilbox/php-fpm:7.4-prod
-    container_name: phpfpm
-    working_dir: /var/www/html
+  site2:
+    image: nginx:alpine
+    container_name: site2
     volumes:
-      - ../:/var/www/html/
-      - ./php-fpm/php-fpm.conf:/usr/local/etc/php-fpm.d/zzz99-overrides.conf
-      - ./php-fpm/php-ini-overrides.ini:/usr/local/etc/php/conf.d/zzz99-overrides.ini
-    ports:
-      - 9000:9000
+      - ./nginx.conf/nginx.site2.conf:/etc/nginx/conf.d/z-overrides.conf
+
+  site3:
+    image: nginx:alpine
+    container_name: site3
+    volumes:
+      - ./nginx.conf/nginx.site3.conf:/etc/nginx/conf.d/z-overrides.conf
+
+  site1-loadbalance1:
+    image: nginx:alpine
+    container_name: site1-loadbalance1
+    volumes:
+      - ./nginx.conf/nginx.site1.loadbalance1.conf:/etc/nginx/conf.d/z-overrides.conf
+
+  site1-loadbalance2:
+    image: nginx:alpine
+    container_name: site1-loadbalance2
+    volumes:
+      - ./nginx.conf/nginx.site1.loadbalance2.conf:/etc/nginx/conf.d/z-overrides.conf
+
+  site1-loadbalance3:
+    image: nginx:alpine
+    container_name: site1-loadbalance3
+    volumes:
+      - ./nginx.conf/nginx.site1.loadbalance3.conf:/etc/nginx/conf.d/z-overrides.conf
