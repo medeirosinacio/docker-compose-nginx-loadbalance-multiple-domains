@@ -8,7 +8,7 @@ Esse arquivo do [docker compose](./docker-compose.yml) trás um modelo completo 
 configurados com load balance, chamados aqui de site1, tambem site2 e site3 para representar 
 multiplos dominios no mesmo endereço IP.
 
-![diagram](./docs/diagram.svg)(/docs/diagram.svg){:width="40px"}
+[![](./docs/diagram.svg)](/docs/diagram.svg)
 
 Você deve apontar os endereços abaixo para o IP do host (caso esteja executando o docker em sua maquina, 
 você deve apontar os endereços para seu localhost).
