@@ -1,66 +1,34 @@
-# Estrutura Básica do Projeto PHP
-###### Basic PHP Project Structure
+# Um modelo docker-compose de proxy reverso com Nginx, load balance e múltiplos domínios configurados
+###### The ultimate easy example with one docker-compose template to nginx web server multiple domains and load balance
 
-Este repositorio foi baseado no [pds/skeleton](https://github.com/php-pds/skeleton), onde descreve com base em estudos,
-uma estrutura padrão para projetos e pacotes PHP.
+Projeto voltado a estudos sobre proxy reverso, load balance e configuração de múltiplos domínios 
+com Nginx.
 
-Foi feito alterações a fim de tornar mais rapido subir, testar e estudar novas funcionalidades PHP, por conta disso a 
-estrutura foi modificada, os detalhes das modificações você encontra nesse documento, para mais detalhes consulte 
-a [documentação original](https://github.com/php-pds/skeleton) antes de começar a usar.
+Esse arquivo do [docker compose](./docker-compose.yml) trás um modelo completo de sites 
+configurados com load balance, chamados aqui de site1, tambem site2 e site3 para representar 
+multiplos dominios no mesmo endereço IP.
 
-## Resumo
+[![](./docs/diagram.svg)](/docs/diagram.svg)
 
-| Se o projeto tiver uma pasta na raiz para...    | ...então a pasta será nomeada: |
-| ----------------------------------------------- | --------------------------- |
-| executáveis da linha de comando                 | `bin/`                      |
-| arquivos dockerfiles para subir a aplicação     | `docker/`                   |
-| arquivos de configuração                        | `config/`                   |
-| arquivos de documentação                        | `docs/`                     |
-| arquivos do servidor web                        | `public/`                   |
-| outros arquivos de recursos                     | `resources/`                |
-| Código fonte PHP                                | `src/`                      |
-| código de teste                                 | `tests/`                    |
-| pacotes adicionais                              | `vendor/`                   |
+Você deve apontar os endereços abaixo para o IP do host (caso esteja executando o docker em sua maquina, 
+você deve apontar os endereços para seu localhost).
 
+```
+    127.0.0.1	    localhost
+    ::1             localhost
+    192.168.70.10   site3.localhost.com
+    192.168.70.10   site2.localhost.com
+    192.168.70.10   site1.localhost.com
+``` 
 
-| Se o projeto tiver um arquivo na raiz para...   | ....então o arquivo será nomeado: |
-| ----------------------------------------------- | --------------------------------- |
-| um log de mudanças entre versões                | `CHANGELOG(.*)`                   |
-| diretrizes para colaboradores                   | `CONTRIBUTING(.*)`                |
-| informações de licenciamento                    | `LICENSE(.*)`                     |
-| informações sobre o próprio pacote ou projeto   | `README(.*)`                      |
-| pacotes requisitos do projeto                   | `composer.json`                   |
+Foi feita uma configuração minima, somente para demonstrar a funcionabilidade do load balance e 
+configuração de multiplos dominios, qualquer aplicação real ou de mais opções, favor ler as referencias do projeto.
 
-## Alterações do projeto original
+[![](./docs/load-balance-exemple.gif)](/docs/load-balance-exemple.gif)
 
-#### Diretorio "docker"
-O projeto original foi realizado a fim de padronizar o desenvolvimento de novos pacotes PHP 
-pela comunidade, a pasta **docker** foi criada para guardar arquivos relacionados ao Docker e Docker Compose, assim 
-conseguimos subir o ambiente completo para testes, estudos ou novos projetos e temos um bom 
-ponto de partida.
+### Referências
 
-Dentro do diretorio ja se encontra o ambiente localhost completo e configurado com Nginx, PHP-FPM e PHP7.4.
-
-#### Diretorio "vendor" e arquivo "composer.json"
-Foi adiciona o **composer.json** no projeto já com as configurações do mesmo, assim, agilizando o 
-desenvolvimento com pacotes externos. O diretorio **vendor** é criado automaticamente 
-ao rodar o comando `composer install` ou `composer update`
-
-#### Arquivos em "public/"
-Foi adicionado arquivos para a construção do projeto já ter uma base de testes. 
-**public/index.php** carrega o autoload do composer e já é carregado pelo servidor web 
-ao iniciar os serviços com `docker-compose up`. **public/phpinfo.php** para conferir todas 
-as configurações e modulos habilitados na imagem.
-
-## Como usar
-
-Existem duas maneiras para usar este templete de projeto PHP.
-
-A primeira é clonando este repositorio e colocar no root do seu servidor web/php, aponte 
-a pasta publica para **public** e rode o composer para atualizar os pacotes.
-
-A segunda é após clonar o repositorio para um servidor com docker e docker compose 
-instalado, entre na pasta docker e rode o build.sh para iniciar os serviços.
-
-Todos os arquivos estão ao maximo simplificado e comentados, você tem total liberdade para
-alterar conforme sua necessidade.
+- [Load Balancing with Nginx and Docker](https://www.sep.com/sep-blog/2017/02/28/load-balancing-nginx-docker/)
+- [Brincando com Docker e Nginx: Multi Domínios e Proxy Reverso](https://stato.blog.br/wordpress/brincando-com-docker-e-nginx-multi-dominios-e-proxy-reverso/)
+- [Use NGINX As A Reverse Proxy To Your Containerized Docker Applications](https://www.thepolyglotdeveloper.com/2017/03/nginx-reverse-proxy-containerized-docker-applications/)
+- [Load Balance and Scale Node.js Containers with Nginx and Docker Swarm](https://levelup.gitconnected.com/load-balance-and-scale-node-js-containers-with-nginx-and-docker-swarm-9fc97c3cff81)
