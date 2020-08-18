@@ -2,10 +2,17 @@ version: "3.7"
 
 services:
 
+  phpfpm:
+    image: bitnami/php-fpm:latest
+    container_name: phpfpm
+    volumes:
+      - ./public:/app
+
   proxy:
     image: nginx:alpine
     container_name: proxy
     volumes:
+      - ./public:/app
       - ./nginx.conf/nginx.proxy.conf:/etc/nginx/conf.d/z-overrides.conf
     ports:
       - 80:80
@@ -14,28 +21,33 @@ services:
     image: nginx:alpine
     container_name: site2
     volumes:
+      - ./public:/app
       - ./nginx.conf/nginx.site2.conf:/etc/nginx/conf.d/z-overrides.conf
 
   site3:
     image: nginx:alpine
     container_name: site3
     volumes:
+      - ./public:/app
       - ./nginx.conf/nginx.site3.conf:/etc/nginx/conf.d/z-overrides.conf
 
   site1-loadbalance1:
     image: nginx:alpine
     container_name: site1-loadbalance1
     volumes:
+      - ./public:/app
       - ./nginx.conf/nginx.site1.loadbalance1.conf:/etc/nginx/conf.d/z-overrides.conf
 
   site1-loadbalance2:
     image: nginx:alpine
     container_name: site1-loadbalance2
     volumes:
+      - ./public:/app
       - ./nginx.conf/nginx.site1.loadbalance2.conf:/etc/nginx/conf.d/z-overrides.conf
 
   site1-loadbalance3:
     image: nginx:alpine
     container_name: site1-loadbalance3
     volumes:
+      - ./public:/app
       - ./nginx.conf/nginx.site1.loadbalance3.conf:/etc/nginx/conf.d/z-overrides.conf
